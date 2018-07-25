@@ -1,11 +1,9 @@
-
 'use strict'
 
-const request = require('request')
+const fetch = require('node-fetch')
 require('dotenv').config()
 
-const cerrajero = (req, res, next) => {
-
+const cerrajero = async (req, res, next) => {
   let token = ''
 
   const bearerHeader = req.headers['authorization']
@@ -19,19 +17,20 @@ const cerrajero = (req, res, next) => {
     'Authorization': `Bearer ${token}`
   }
 
-  const options = {
-    url: process.env.checkuri,
-    headers: headers,
-    method: 'POST'
-  }
+  try {
+    const response = await fetch(process.env.checkuri, {
+      method: 'POST',
+      headers: headers
+    })
 
-  request(options, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
+    if (response.status === 200) {
       next()
     } else {
-      next(error)
+      next(new Error('unauthorized'))
     }
-  })
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = cerrajero
