@@ -18,7 +18,7 @@ const cerrajero = async (req, res, next) => {
   }
 
   try {
-    const response = await fetch(process.env.checkuri, {
+    const response = await fetch(process.env.CHECKURI, {
       method: 'POST',
       headers: headers
     })
