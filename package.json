@@ -1,6 +1,6 @@
 {
   "name": "cerrajero",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Express midlware to auth with custom provider",
   "main": "index.js",
   "scripts": {
